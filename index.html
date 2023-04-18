@@ -1,0 +1,90 @@
+<!doctype html>
+<head>
+
+	<title>Gold CLicker!</title>
+     
+</head>
+
+
+
+<script>
+var clicker = {
+	Gold:0,
+	upgrades: {
+		Gold_machine: {
+			amount:0,
+			cost:10,
+			gps:1,
+			name:"Gold Machines"
+		},
+		Gold_factory: {
+			amount:0,
+			cost:50,
+			gps:5,
+			name:"Gold Factorys"
+		},
+				Gold_world: {
+			amount:0,
+			cost:1000,
+			gps:50,
+			name:"Gold Worlds"
+		},
+				Gold_galaxy: {
+			amount:0,
+			cost:20000,
+			gps:1000,
+			name:"Gold Galaxys"
+		},
+						Gold_universe: {
+			amount:0,
+			cost:100000,
+			gps:10000,
+			name:"Gold Universes"
+		},
+								Crab_nebula: {
+			amount:0,
+			cost:1000000,
+			gps:100000,
+			name:"CRAB NEBULA"
+		}
+	}
+};
+
+function thing_clicked(thing) {
+	if(clicker.upgrades[thing].cost <= clicker.Gold){
+	clicker.Gold-= clicker.upgrades[thing].cost;
+	clicker.upgrades[thing].amount++
+	clicker.upgrades[thing].cost += Math.round(clicker.upgrades[thing].cost*0.15)
+	update_upgrades();
+	}
+}
+function update_upgrades() {
+	document.querySelector("#upgrades").innerHTML="";
+	for(i in clicker.upgrades){
+		document.querySelector("#upgrades").innerHTML+= `<br> <button onclick="thing_clicked('${i}')">${clicker.upgrades[i].name} <img src="https://th.bing.com/th/id/R.f9da09a345b352d9f6cd4e59f66197c4?rik=5rgz5SyXWnzk7w&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2fcoin-clip-art-37.png&ehk=yp8luWDDN9Xiie%2fdDupBII59UHwqn6Ed25VRBSB%2bGlE%3d&risl=1&pid=ImgRaw&r=0" class="responsive" id='image' width=50 height=50></button> you have ${clicker.upgrades[i].amount}. cost: ${clicker.upgrades[i].cost}`;
+	}
+
+}
+function update_count(){
+	update_upgrades()
+	setInterval(() => {
+		for(i in clicker.upgrades){
+			clicker.Gold+=clicker.upgrades[i].amount*clicker.upgrades[i].gps/20
+		}
+		document.querySelector("#Gold").innerHTML = "you have "+String(clicker.Gold).split(".")[0]+" Gold!"
+	},50);
+}
+
+</script>
+
+<body onload="update_count()" background="https://i.pinimg.com/originals/9c/f6/5d/9cf65d56bca43b54f96fe5a4eb17beec.jpg" width=500 height=500>
+<h1 id=Gold>you have 0 Gold!</h1>
+
+<button onclick="clicker.Gold++">
+<img src="https://th.bing.com/th/id/R.0fbeb730873382ddb32de7d2499e7a48?rik=cOz86056SdU5fg&pid=ImgRaw&r=0" class="responsive" id='image' width=250 height=125>
+</button>
+<div id = "upgrades">
+
+</div>
+
+</body>
